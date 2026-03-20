@@ -27,5 +27,6 @@ jobs:
                 "d1_databases": [],
                 "r2_buckets": [],
                 "durable_objects_namespaces": []
-              }
+              },
+              "production_branch": "master"
             }'
