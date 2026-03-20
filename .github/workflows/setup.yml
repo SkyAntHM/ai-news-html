@@ -9,7 +9,7 @@ jobs:
     steps:
       - name: Create Cloudflare Pages Project
         run: |
-          curl -s -X POST "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/pages/projects" \
+          RESPONSE=$(curl -s -X POST "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/pages/projects" \
             -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
             -H "Content-Type: application/json" \
             -d '{
@@ -17,9 +17,6 @@ jobs:
               "build_config": {
                 "build_command": "",
                 "destination_dir": ""
-              },
-              "source": {
-                "type": "direct_upload"
               },
               "deployment_config": {
                 "env_vars": {},
@@ -29,4 +26,6 @@ jobs:
                 "durable_objects_namespaces": []
               },
               "production_branch": "master"
-            }'
+            }')
+          echo "$RESPONSE"
+          echo "$RESPONSE" | grep -q '"success": true' && echo "PROJECT_CREATED_SUCCESSFULLY"
