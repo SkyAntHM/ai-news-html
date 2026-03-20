@@ -1,0 +1,31 @@
+name: Setup Cloudflare Pages Project
+
+on:
+  workflow_dispatch:
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Cloudflare Pages Project
+        run: |
+          curl -s -X POST "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/pages/projects" \
+            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "name": "ai-news-html",
+              "build_config": {
+                "build_command": "",
+                "destination_dir": ""
+              },
+              "source": {
+                "type": "direct_upload"
+              },
+              "deployment_config": {
+                "env_vars": {},
+                "kv_namespaces": [],
+                "d1_databases": [],
+                "r2_buckets": [],
+                "durable_objects_namespaces": []
+              }
+            }'
