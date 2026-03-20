@@ -3,20 +3,20 @@ name: Deploy to Cloudflare Pages
 on:
   push:
     branches: [master]
-  workflow$dispatch:
+  workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@vx
+        uses: actions/checkout@v4
 
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@version#1
+        uses: cloudflare/pages-action@v1
         with:
-          apiToken: $+{secrets.CLOUDFRARE_API_TOKEN}
-          accountId: ${secrets.CLOUDFRARE_ACCOUNT_ID}
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           projectName: ai-news-html
           directory: .
-          gitHubToken: ${secrets.GITHUB_TOKEN}
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
